@@ -62,9 +62,12 @@ func main()  {
 	// fmt.Printf("flint under tanis by ceo: %+v\n",PrintEmployees(pathToCEO(Employees["Tanis"],"Flint",nil)))
 	// fmt.Printf("caramon under tanis by ceo: %+v\n",PrintEmployees(pathToCEO(Employees["Tanis"],"Caramon",nil)))
 	// fmt.Printf("tas under tanis by ceo: %+v\n",PrintEmployees(pathToCEO(Employees["Tanis"],"Tasslehoff",nil)))
-	PrintEmployees(pathToCEO(Employees["Tanis"],"Flint",nil))
-	PrintEmployees(pathToCEO(Employees["Tanis"],"Caramon",nil))
-	PrintEmployees(pathToCEO(Employees["Tanis"],"Tasslehoff",nil))
+	// PrintEmployees(pathToCEO(Employees["Tanis"],"Flint",nil))
+	// PrintEmployees(pathToCEO(Employees["Tanis"],"Caramon",nil))
+	// PrintEmployees(pathToCEO(Employees["Tanis"],"Tasslehoff",nil))
+	fmt.Println(findCommonManager(Employees["Tasslehoff"],Employees["Sturm"],Employees["Tanis"]))
+	fmt.Println(findCommonManager(Employees["Caramon"],Employees["Sturm"],Employees["Tanis"]))
+
 	
 }
 func findByNameDFS(e *Employee, name string) *Employee {
@@ -109,6 +112,31 @@ func pathToCEO(e *Employee,name string,path []*Employee)[]*Employee{
 		}
 	}
 	return nil
+}
+
+func findCommonManager(e1,e2,ceo *Employee) *Employee{
+	firstPath:=pathToCEO(ceo,e1.Name,nil)
+	secondPath:=pathToCEO(ceo,e2.Name,nil)
+	fmt.Println("first path")
+	PrintEmployees(firstPath)
+	fmt.Println("second path")
+	PrintEmployees(secondPath)
+	return findManagerByPaths(firstPath,secondPath)
+}
+
+func findManagerByPaths(p1,p2 []*Employee) *Employee{
+	lenp1:=len(p1)
+	// lenp2:=len(p2)
+	manager:=&Employee{}
+	for i := 0; i <= lenp1; i++ {
+		if p1[i]==p2[i] {
+			manager=p1[i]
+			fmt.Println("manager: ",manager)
+		}else{
+			break
+		}
+	}
+	return manager
 }
 
 func AddDragonlance()  {
