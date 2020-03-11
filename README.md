@@ -19,6 +19,7 @@ ____
 
 - Hierarchical organisation is structured as a tree (acyclic graph)
 - Each employee only has one manager
+- All employee names are uniqe
 
 # Hierarchical Organisation of Dragonlance
 

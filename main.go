@@ -14,6 +14,7 @@ type Employee struct{
 
 func (e *Employee) AddSubordinate(sub *Employee)  {
 	e.Subordinates=append(e.Subordinates,sub)
+	Employees[e.Name]=e
 }
 var Employees = map[string]*Employee{}
 
@@ -56,6 +57,7 @@ func main()  {
 	// Caramon.Print(0)
 	// Raistlin.Print(0)
 	Employees["Tanis"].Print(0)
+	// Employees["Raistlin"].Print(0)
 	// fmt.Println(Employees["Tanis"])
 	// fmt.Println("flint under tanis: ",findByNameDFS(Employees["Tanis"],"Flint"))
 	// path:=pathToCEO(Employees["Tanis"],"Flint",nil)
@@ -65,15 +67,15 @@ func main()  {
 	// PrintEmployees(pathToCEO(Employees["Tanis"],"Flint",nil))
 	// PrintEmployees(pathToCEO(Employees["Tanis"],"Caramon",nil))
 	// PrintEmployees(pathToCEO(Employees["Tanis"],"Tasslehoff",nil))
-	fmt.Println(findCommonManager(Employees["Tasslehoff"],Employees["Sturm"],Employees["Tanis"]))
-	fmt.Println(findCommonManager(Employees["Caramon"],Employees["Sturm"],Employees["Tanis"]))
+	// fmt.Println(findCommonManager(Employees["Tasslehoff"],Employees["Sturm"],Employees["Tanis"]))
+	// fmt.Println(findCommonManager(Employees["Caramon"],Employees["Sturm"],Employees["Tanis"]))
 
 	
 }
 func findByNameDFS(e *Employee, name string) *Employee {
-	fmt.Println(e, e.Name,name)
+	// fmt.Println(e, e.Name,name)
 	if e.Name == name {
-		fmt.Println("equal")
+		// fmt.Println("equal")
 			return e
 	} else if len(e.Subordinates) > 0 {
 			for _, child := range e.Subordinates {
@@ -84,6 +86,15 @@ func findByNameDFS(e *Employee, name string) *Employee {
 	}
 	return nil
 }
+
+func findEmployee(name string) *Employee{
+	return findByNameDFS(getCEO(),name)
+}
+
+func getCEO()*Employee{
+	return Employees["Tanis"]
+}
+
 func contains(s []*Employee, e *Employee) bool {
     for _, a := range s {
         if a == e {
@@ -138,6 +149,36 @@ func findManagerByPaths(p1,p2 []*Employee) *Employee{
 	}
 	return manager
 }
+// type Counter struct {
+// 	count:=1
+// }
+
+// func (self Counter) currentValue() int {
+// 	return self.count
+// }
+// func (self *Counter) increment() {
+// 	self.count++
+// }
+
+func AddEmployee(name string){
+	fmt.Println("inside add employee")
+	e:=Employee{
+		ID:9,
+		Name:name,
+	}
+	Employees[name]=&e
+	fmt.Println(Employees)
+	fmt.Println(Employees[name])
+}
+
+func AddRelation(manager, employee string){
+	m:=findEmployee(manager)
+	e:=Employees[employee]
+	m.AddSubordinate(e)
+	fmt.Println(m)
+	fmt.Println(e)
+	fmt.Println("inside add relation")
+}
 
 func AddDragonlance()  {
 	Raistlin:=Employee{
@@ -172,14 +213,6 @@ func AddDragonlance()  {
 		ID:8,
 		Name:"Sturm",
 	}
-	Tanis.AddSubordinate(&Raistlin)
-	Tanis.AddSubordinate(&Flint)
-	Tanis.AddSubordinate(&Goldmoon)
-	Raistlin.AddSubordinate(&Caramon)
-	Flint.AddSubordinate(&Tasslehoff)
-	Flint.AddSubordinate(&Sturm)
-	Goldmoon.AddSubordinate(&Riverwind)
-
 	Employees["Raistlin"]=&Raistlin
 	Employees["Caramon"]=&Caramon
 	Employees["Tanis"]=&Tanis
@@ -188,6 +221,20 @@ func AddDragonlance()  {
 	Employees["Riwervind"]=&Riverwind
 	Employees["Tasslehoff"]=&Tasslehoff
 	Employees["Sturm"]=&Sturm
+	
+	Tanis.AddSubordinate(&Raistlin)
+	Tanis.AddSubordinate(&Flint)
+	Tanis.AddSubordinate(&Goldmoon)
+	Raistlin.AddSubordinate(&Caramon)
+	Flint.AddSubordinate(&Tasslehoff)
+	Flint.AddSubordinate(&Sturm)
+	Goldmoon.AddSubordinate(&Riverwind)
+
+	
+
+	AddEmployee("Dalamar")
+	AddRelation("Raistlin","Dalamar")
+
 
 }
 
