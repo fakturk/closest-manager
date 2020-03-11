@@ -12,3 +12,14 @@ Here are some guidelines:
 - A Manager should link to Employees and not the other way around.
 - We prefer that you to use Go, but accept other languages too.
 - How the program takes its input and produces its output is up to you.
+
+____
+
+# Assumptions
+
+- Hierarchical organisation is structured as a tree (acyclic graph)
+- Each employee only has one manager
+
+# Hierarchical Organisation of Dragonlance
+
+![Dragonlance](/images/dragonlance.png)
