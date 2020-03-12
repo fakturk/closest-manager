@@ -102,7 +102,7 @@ func runCommand(commandStr string) error {
 		os.Exit(0)
 		// add another case here for custom commands.
 	
-	case "print":
+	case "print","p":
 		if len(arrCommandStr)<2{
 			err=errors.New("name not given for  print")
 			break
@@ -121,7 +121,7 @@ func runCommand(commandStr string) error {
 			Employees[name].Print(0)
 		}
 	
-	case "newEmployee":
+	case "newEmployee","new","n":
 		if len(arrCommandStr)<2{
 			err=errors.New("name not given for Employee")
 			break
@@ -130,7 +130,7 @@ func runCommand(commandStr string) error {
 			AddEmployee(name)
 		}
 	
-	case "addRelation":
+	case "addRelation","relation","r":
 		if len(arrCommandStr)<3{
 			err=errors.New("usage: addRelation manager employee")
 			break
@@ -145,6 +145,23 @@ func runCommand(commandStr string) error {
 				break
 			}
 			AddRelation(manager,employee)
+		}
+	case "findManager","find","f":
+		if len(arrCommandStr)<3{
+			err=errors.New("usage: findManager employee1 employee2")
+			break
+		}else{
+			e1:=arrCommandStr[1]
+			e2:=arrCommandStr[2]
+			if (findEmployee(e1)==nil){
+				err=errors.New("first employee not found on employee list")
+				break
+			}else if (findEmployee(e2)==nil){
+				err=errors.New("second employee not found on employee list")
+				break
+			}
+		manager:=findManager(e1,e2)
+		fmt.Println("common manager : ",manager.Name)
 		}
 		// add another case here for custom commands.
 	}
@@ -206,6 +223,10 @@ func pathToCEO(e *Employee,name string,path []*Employee)[]*Employee{
 	return nil
 }
 
+func findManager(e1,e2 string) *Employee{
+	return findCommonManager(findEmployee(e1),findEmployee(e2),getCEO())
+}
+
 func findCommonManager(e1,e2,ceo *Employee) *Employee{
 	firstPath:=pathToCEO(ceo,e1.Name,nil)
 	secondPath:=pathToCEO(ceo,e2.Name,nil)
@@ -218,9 +239,13 @@ func findCommonManager(e1,e2,ceo *Employee) *Employee{
 
 func findManagerByPaths(p1,p2 []*Employee) *Employee{
 	lenp1:=len(p1)
-	// lenp2:=len(p2)
+	lenp2:=len(p2)
+	smallestLen:=lenp2
+	if lenp1<lenp2{
+		smallestLen=lenp1
+	}
 	manager:=&Employee{}
-	for i := 0; i <= lenp1; i++ {
+	for i := 0; i < smallestLen; i++ {
 		if p1[i]==p2[i] {
 			manager=p1[i]
 			fmt.Println("manager: ",manager)
