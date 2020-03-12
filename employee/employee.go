@@ -151,51 +151,54 @@ func AddRelation(manager, employee string){
 }
 
 func AddDragonlance()  {
-	Raistlin:=Employee{
-		Name:"Raistlin",
-	}
-	Caramon:=Employee{
-		Name:"Caramon",
-	}
-	Tanis:=Employee{
-		Name:"Tanis",
-	}
-	Flint:=Employee{
-		Name:"Flint",
-	}
-	Goldmoon:=Employee{
-		Name:"Goldmoon",
-	}
-	Riverwind:=Employee{
-		Name:"Riverwind",
-	}
-	Tasslehoff:=Employee{
-		Name:"Tasslehoff",
-	}
-	Sturm:=Employee{
-		Name:"Sturm",
-	}
-	Employees["Raistlin"]=&Raistlin
-	Employees["Caramon"]=&Caramon
-	Employees["Tanis"]=&Tanis
-	Employees["Flint"]=&Flint
-	Employees["Goldmoon"]=&Goldmoon
-	Employees["Riwervind"]=&Riverwind
-	Employees["Tasslehoff"]=&Tasslehoff
-	Employees["Sturm"]=&Sturm
-	
-	Tanis.AddSubordinate(&Raistlin)
-	Tanis.AddSubordinate(&Flint)
-	Tanis.AddSubordinate(&Goldmoon)
-	Raistlin.AddSubordinate(&Caramon)
-	Flint.AddSubordinate(&Tasslehoff)
-	Flint.AddSubordinate(&Sturm)
-	Goldmoon.AddSubordinate(&Riverwind)
-
-	
-
+	// Drangonlance characters added to employee list (without relations)
+	AddEmployee("Raistlin")
+	AddEmployee("Caramon")
+	AddEmployee("Tanis")
+	AddEmployee("Flint")
+	AddEmployee("Goldmoon")
+	AddEmployee("Riverwind")
+	AddEmployee("Mira")
+	AddEmployee("Tasslehoff")
+	AddEmployee("Sturm")
 	AddEmployee("Dalamar")
-	AddRelation("Raistlin","Dalamar")
+	AddEmployee("Valin")
+	AddEmployee("Parsalian")
+	AddEmployee("Crysina")
+	AddEmployee("Bupu")
+	AddEmployee("Laurana")
+	AddEmployee("Kitiara")
+	AddEmployee("Huma")
+	AddEmployee("Elistan")
+	AddEmployee("Fistandantilus")
+	AddEmployee("Tika")
+	
+	// Add relations between dragonlance hierachy
+	AddRelation("Tanis","Raistlin")
+	AddRelation("Tanis","Flint")
+	AddRelation("Tanis","Goldmoon")
 
+	AddRelation("Raistlin","Caramon")
+	AddRelation("Raistlin","Dalamar")
+	AddRelation("Raistlin","Bupu")
+
+
+	AddRelation("Flint","Tasslehoff")
+	AddRelation("Flint","Sturm")
+
+	AddRelation("Goldmoon","Riverwind")
+	AddRelation("Goldmoon","Mira")
+
+	AddRelation("Dalamar","Valin")
+	AddRelation("Dalamar","Parsalian")
+	AddRelation("Dalamar","Crysina")
+
+	AddRelation("Caramon","Laurana")
+	AddRelation("Caramon","Kitiara")
+	AddRelation("Caramon","Huma")
+
+	AddRelation("Tasslehoff","Elistan")
+	AddRelation("Tasslehoff","Fistandantilus")
+	AddRelation("Tasslehoff","Tika")
 
 }
