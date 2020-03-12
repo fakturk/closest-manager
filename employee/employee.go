@@ -2,6 +2,7 @@ package employee
 
 import(
 	"fmt"
+	"strings"
 )
 
 type Employee struct{
@@ -13,21 +14,27 @@ func (e *Employee) AddSubordinate(sub *Employee)  {
 	Employees[e.Name]=e
 }
 var Employees = map[string]*Employee{}
+var CEO =Employee{
+	Name:"",
+}
 
 func (e *Employee)  Print(level int){
-	fmt.Print("Name: ",e.Name,", ")
+	space := strings.Repeat(" ", level)
+	fmt.Print(space,"Name: ",e.Name)
 	
 
 	if len(e.Subordinates)>0 {
-		fmt.Print("Subordinates: [")
+		level++
+		// fmt.Println()
+		
+		// fmt.Print(space,"Subordinates: [")
+		fmt.Println(" ,Subordinates ↓")
 		for _,v:=range e.Subordinates{
-			if v!=nil {
-				
-			}
-			level++
+			// level++
 			v.Print(level)
 		}
-		fmt.Println("]")
+		// fmt.Print("]")
+		fmt.Println()
 	}
 	if level==0 {
 		fmt.Println()
@@ -64,7 +71,7 @@ func FindEmployee(name string) *Employee{
 }
 
 func GetCEO()*Employee{
-	return Employees["Tanis"]
+	return &CEO
 }
 
 func contains(s []*Employee, e *Employee) bool {
@@ -89,7 +96,6 @@ func pathToCEO(e *Employee,name string,path []*Employee)[]*Employee{
 			
 			if result:= pathToCEO(child, name, path); result!=nil{
 				fmt.Println("result: ",result)
-				// return append(path,result...)
 				return result
 			} 
 		}
@@ -142,12 +148,21 @@ func AddEmployee(name string){
 }
 
 func AddRelation(manager, employee string){
-	m:=FindEmployee(manager)
+	m:=Employees[manager]
 	e:=Employees[employee]
 	m.AddSubordinate(e)
+	UpdateCEO(m,e)
 	fmt.Println(m)
 	fmt.Println(e)
 	fmt.Println("inside add relation")
+}
+
+func UpdateCEO(manager, employee *Employee)  {
+	fmt.Println("inside updateCEO, ",manager,employee)
+	if (CEO.Name=="") || employee.Name==CEO.Name{
+		CEO=*manager
+		fmt.Println("CEO  updated, ",CEO)
+	}
 }
 
 func AddDragonlance()  {

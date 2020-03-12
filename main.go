@@ -76,6 +76,7 @@ func runCommand(commandStr string) error {
 			name:=arrCommandStr[1]
 			if name =="Organization"{
 				name = employee.GetCEO().Name
+				fmt.Println("CEO :",name)
 			} else if name =="All"{
 				fmt.Println(employee.Employees)
 				break
@@ -103,7 +104,7 @@ func runCommand(commandStr string) error {
 		}else{
 			manager:=arrCommandStr[1]
 			e:=arrCommandStr[2]
-			if (employee.FindEmployee(manager)==nil){
+			if (employee.Employees[manager]==nil){
 				err=errors.New("manager not found on employee list")
 				break
 			}else if (employee.Employees[e]==nil){
