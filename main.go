@@ -7,6 +7,7 @@ import(
 	"strings"
 	"errors"
 	"github.com/fakturk/closest-manager/employee"
+	"github.com/fatih/color"
 
 )
 
@@ -17,33 +18,19 @@ import(
 
 
 func main()  {
+	//adds mock organization called dragonlance (with dragonlance characters)
 	employee.AddDragonlance()
-	// fmt.Printf("%+v\n",Raistlin.Subordinates[0])
-	// fmt.Println(Caramon)
-	// Raistlin.Print(0)
-	// Caramon.Print(0)
-	// Raistlin.Print(0)
-	employee.Employees["Tanis"].Print(0)
-	// Employees["Raistlin"].Print(0)
-	// fmt.Println(Employees["Tanis"])
-	// fmt.Println("flint under tanis: ",FindByNameDFS(Employees["Tanis"],"Flint"))
-	// path:=pathToCEO(Employees["Tanis"],"Flint",nil)
-	// fmt.Printf("flint under tanis by ceo: %+v\n",PrintEmployees(pathToCEO(Employees["Tanis"],"Flint",nil)))
-	// fmt.Printf("caramon under tanis by ceo: %+v\n",PrintEmployees(pathToCEO(Employees["Tanis"],"Caramon",nil)))
-	// fmt.Printf("tas under tanis by ceo: %+v\n",PrintEmployees(pathToCEO(Employees["Tanis"],"Tasslehoff",nil)))
-	// PrintEmployees(pathToCEO(Employees["Tanis"],"Flint",nil))
-	// PrintEmployees(pathToCEO(Employees["Tanis"],"Caramon",nil))
-	// PrintEmployees(pathToCEO(Employees["Tanis"],"Tasslehoff",nil))
-	// fmt.Println(FindCommonManager(Employees["Tasslehoff"],Employees["Sturm"],Employees["Tanis"]))
-	// fmt.Println(FindCommonManager(Employees["Caramon"],Employees["Sturm"],Employees["Tanis"]))
+
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Welcome to Closest Manager Finder")
+	color.Cyan("Welcome to Closest Manager Finder")
 	fmt.Println("An Organization Chart for the Dragonlance Characters added to the system")
-	fmt.Println("For printing an employee (with it subortinates) please use [print Name] or [p Name] command")
-	fmt.Println("For printing whole organization  please use [print Organization] or [p Organization] command")
-	fmt.Println("For adding a new employee please use [newEmployee Name],[new Name] or [n Name] command")
-	fmt.Println("For adding a relation between a manager and an employee please use [addRelation ManagerName EmployeeName],[add Manager Employee] or [r Manager Employee] command")
-	fmt.Println("For finding common manager between two employees please use [findManager Employee1 Employee2],[find Employee1 Employee2] or [f Employee1 Employee2] command")
+	fmt.Println("Please use", color.RedString("[exit]") ,"command for exiting from program")
+	fmt.Println("For printing an employee (with it subortinates) please use", color.GreenString("[print Name]"), "or", color.GreenString("[p Name]"), "command")
+	fmt.Println("For printing whole organization  please use", color.GreenString("[print Organization]"), "or", color.GreenString("[p Organization]"), "command")
+	fmt.Println("For adding a new employee please use" ,color.GreenString("[newEmployee Name]"),",",color.GreenString("[new Name]"), "or" ,color.GreenString("[n Name]"), "command")
+	fmt.Println("For adding a relation between a manager and an employee please use", color.GreenString("[addRelation ManagerName EmployeeName]"),",",color.GreenString("[add Manager Employee]"), "or", color.GreenString("[r Manager Employee]"), "command")
+	fmt.Println("For finding common manager between two employees please use", color.GreenString("[findManager Employee1 Employee2]"),",",color.GreenString("[find Employee1 Employee2]"), "or", color.GreenString("[f Employee1 Employee2]"), "command")
+	fmt.Println("Please use", color.YellowString("[help]") ,"command for help")
 	for {
 		fmt.Print("$ ")
 		cmdString, err := reader.ReadString('\n')
@@ -57,6 +44,7 @@ func main()  {
 	}
 	
 }
+
 func runCommand(commandStr string) error {
 	
 	commandStr = strings.TrimSuffix(commandStr, "\n")
@@ -67,6 +55,13 @@ func runCommand(commandStr string) error {
 	case "exit":
 		os.Exit(0)
 		// add another case here for custom commands.
+	case "help","h":
+		fmt.Println("\n||\n  character meaning  or  and it means either commands can be used")
+		fmt.Println("[print || p] employee - prints given employee with subordinates")
+		fmt.Println("[newEmployee || new || n] employee - add  new employee (without relations)")
+		fmt.Println("[addRelation || relation || r] manager employee - add a relation between two employees (manager-subortdinate)")
+		fmt.Println("[findManager || find || f] employee1 employee2 - finds  closest common Manager ")
+
 	
 	case "print","p":
 		if len(arrCommandStr)<2{
@@ -128,13 +123,11 @@ func runCommand(commandStr string) error {
 				break
 			}
 		manager:=employee.FindManager(e1,e2)
-		fmt.Println("common manager : ",manager.Name)
+		fmt.Println("Closest Common Manager : ",color.CyanString(manager.Name))
 		}
 		// add another case here for custom commands.
 	}
-	// cmd := exec.Command(arrCommandStr[0], arrCommandStr[1:]...)
-	// cmd.Stderr = os.Stderr
-	// cmd.Stdout = os.Stdout
+	
 	return err
 }
 

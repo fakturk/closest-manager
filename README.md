@@ -21,7 +21,23 @@ ____
 - Each employee only has one manager
 - All employee names are uniqe
 - Names are case sensitive
+- Remove Employee not implemented (it could be overengineering because goal of this program is finding common manager between two employees)
+- Relation can not be changed after first add (it could be overengineering because goal of this program is finding common manager between two employees)
 
 # Hierarchical Organisation of Dragonlance
 
 ![Dragonlance](/images/dragonlance.png)
+
+# Algorithm
+- Finds the road between the given employee and ceo (all the employees between ceo and given employee) with Depth First Search for both employees.
+- We have two list of paths for "ceo to employee1" and "ceo to employee2"
+- Start comparing two list from the beginning and find first different element (manager) between the list
+- Return the manager we found
+
+# Usage
+- go run main.go
+- after running program following commands can be used inside
+- For printing an employee (with it subortinates) please use [print Name] or [p Name] command
+- For adding a new employee please use [newEmployee Name],[new Name] or [n Name] command
+- For adding a relation between a manager and an employee please use [addRelation ManagerName EmployeeName],[add Manager Employee] or [r Manager Employee] command
+- For finding common manager between two employees please use [findManager Employee1 Employee2],[find Employee1 Employee2] or [f Employee1 Employee2] command
